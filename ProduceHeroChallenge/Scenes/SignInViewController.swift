@@ -8,20 +8,18 @@
 
 import UIKit
 
-protocol SignInViewControllerDelegate: class{
-    func doneTouched()
-    func cancelTouched()
-}
-
 class SignInViewController: UIViewController {
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
     
-
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        view.endEditing(true)
+    }
     
-
+    @IBAction func signInTouched(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
 }

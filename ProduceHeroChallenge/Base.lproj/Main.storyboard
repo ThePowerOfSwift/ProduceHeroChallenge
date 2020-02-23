@@ -111,6 +111,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Uj8-5a-8r1"/>
                     </view>
+                    <connections>
+                        <outlet property="signatureView" destination="ptk-LT-ECV" id="cqa-6l-UMC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2FT-gW-03j" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -161,12 +164,16 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Routes" id="Qqj-l8-cSR">
-                        <barButtonItem key="leftBarButtonItem" title="Sign Out" id="vss-eu-Yle"/>
+                        <barButtonItem key="leftBarButtonItem" title="Sign Out" id="vss-eu-Yle">
+                            <connections>
+                                <action selector="signOutTouched:" destination="VXv-QF-VA4" id="jD6-Ly-JGe"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="SbK-Km-3CC" id="u8Q-hr-ITz"/>
                         <segue destination="A6i-mW-dLG" kind="show" identifier="showPlan" id="J2W-8J-l3f"/>
-                        <segue destination="Con-HT-ZU6" kind="presentation" modalPresentationStyle="fullScreen" id="UHo-4a-H16"/>
+                        <segue destination="Con-HT-ZU6" kind="presentation" identifier="presentSignIn" animates="NO" modalPresentationStyle="fullScreen" id="UHo-4a-H16"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aJA-xW-AlD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -381,20 +388,77 @@
             </objects>
             <point key="canvasLocation" x="5918.840579710145" y="1103.5714285714284"/>
         </scene>
-        <!--View Controller-->
+        <!--Sign In View Controller-->
         <scene sceneID="3fv-Dc-2ng">
             <objects>
-                <viewController id="Con-HT-ZU6" sceneMemberID="viewController">
+                <viewController id="Con-HT-ZU6" customClass="SignInViewController" customModule="ProduceHeroChallenge" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7ea-ZG-E5S">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Produce" translatesAutoresizingMaskIntoConstraints="NO" id="Z9S-rH-4Qc">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="acw-V5-5gc">
+                                <rect key="frame" x="40" y="192" width="334" height="34"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yDG-Pm-aSp">
+                                <rect key="frame" x="40" y="246" width="334" height="34"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7IB-8w-l5q">
+                                <rect key="frame" x="40" y="310" width="334" height="50"/>
+                                <color key="backgroundColor" red="0.0" green="0.74902486800000001" blue="0.61176919939999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="rPj-78-ZkA"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                <state key="normal" title="Sign In">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="signInTouched:" destination="Con-HT-ZU6" eventType="touchUpInside" id="kne-87-KK1"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ProduceHero" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kva-Pw-4e3">
+                                <rect key="frame" x="40" y="94" width="334" height="48"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="40"/>
+                                <color key="textColor" red="0.0" green="0.74902486800000001" blue="0.61176919939999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="highlightedColor" cocoaTouchSystemColor="darkTextColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="yDG-Pm-aSp" firstAttribute="top" secondItem="acw-V5-5gc" secondAttribute="bottom" constant="20" id="53Y-un-r5B"/>
+                            <constraint firstItem="7IB-8w-l5q" firstAttribute="leading" secondItem="yDG-Pm-aSp" secondAttribute="leading" id="6Lr-Mo-0f1"/>
+                            <constraint firstItem="Z9S-rH-4Qc" firstAttribute="top" secondItem="7ea-ZG-E5S" secondAttribute="top" id="AZk-en-wdU"/>
+                            <constraint firstItem="Z9S-rH-4Qc" firstAttribute="leading" secondItem="yYX-G4-fwx" secondAttribute="leading" id="F1B-pa-ZHP"/>
+                            <constraint firstItem="yYX-G4-fwx" firstAttribute="trailing" secondItem="Z9S-rH-4Qc" secondAttribute="trailing" id="LKC-Ok-JFj"/>
+                            <constraint firstItem="acw-V5-5gc" firstAttribute="leading" secondItem="Kva-Pw-4e3" secondAttribute="leading" id="P5H-mM-7o3"/>
+                            <constraint firstItem="Kva-Pw-4e3" firstAttribute="leading" secondItem="yYX-G4-fwx" secondAttribute="leading" constant="40" id="W4J-pw-FAp"/>
+                            <constraint firstItem="acw-V5-5gc" firstAttribute="trailing" secondItem="Kva-Pw-4e3" secondAttribute="trailing" id="X4G-Ss-pBl"/>
+                            <constraint firstItem="yDG-Pm-aSp" firstAttribute="trailing" secondItem="acw-V5-5gc" secondAttribute="trailing" id="aOP-es-jgC"/>
+                            <constraint firstItem="yYX-G4-fwx" firstAttribute="trailing" secondItem="Kva-Pw-4e3" secondAttribute="trailing" constant="40" id="ic1-ws-9Lg"/>
+                            <constraint firstItem="yDG-Pm-aSp" firstAttribute="leading" secondItem="acw-V5-5gc" secondAttribute="leading" id="j3T-ms-xvK"/>
+                            <constraint firstItem="acw-V5-5gc" firstAttribute="top" secondItem="Kva-Pw-4e3" secondAttribute="bottom" constant="50" id="lOO-iN-46F"/>
+                            <constraint firstItem="7IB-8w-l5q" firstAttribute="trailing" secondItem="yDG-Pm-aSp" secondAttribute="trailing" id="oxl-yk-w2O"/>
+                            <constraint firstItem="7IB-8w-l5q" firstAttribute="top" secondItem="yDG-Pm-aSp" secondAttribute="bottom" constant="30" id="rSZ-tU-6om"/>
+                            <constraint firstAttribute="bottom" secondItem="Z9S-rH-4Qc" secondAttribute="bottom" id="sVs-2x-zsF"/>
+                            <constraint firstItem="Kva-Pw-4e3" firstAttribute="top" secondItem="yYX-G4-fwx" secondAttribute="top" constant="50" id="xV2-zW-iBG"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="yYX-G4-fwx"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1yc-eY-qCW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4028" y="54"/>
+            <point key="canvasLocation" x="4027.5362318840585" y="53.571428571428569"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="6Sj-99-kOt">
@@ -415,4 +479,7 @@
             <point key="canvasLocation" x="2069.5652173913045" y="460.71428571428567"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Produce" width="416" height="623"/>
+    </resources>
 </document>

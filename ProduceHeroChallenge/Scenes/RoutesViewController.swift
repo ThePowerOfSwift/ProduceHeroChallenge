@@ -10,6 +10,10 @@ import UIKit
 
 class RoutesViewController: UITableViewController {
     
+    private let signInSegueId = "presentSignIn"
+    private let routesPlanSegueId = "showPlan"
+    private let routeCellId = "RouteCell"
+    
     private var cities: [City] = [City(name: "Toronto", businesses:
         [Business(name: "Pizza Inc.", address: "100 Yonge St, Toronto", signed: false),
          Business(name: "Boston Pizza Inc.", address: "20 Sheppard St, Toronto", signed: false),
@@ -23,32 +27,39 @@ class RoutesViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "RouteCell")
+        performSegue(withIdentifier: signInSegueId, sender: nil)
+
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: routeCellId)
         tableView.delegate = self
         tableView.dataSource = self
     }
-
+    
+    @IBAction func signOutTouched(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: signInSegueId, sender: nil)
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cities.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "RouteCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: routeCellId, for: indexPath)
         cell.textLabel?.text = cities[indexPath.row].name
         cell.accessoryType = .disclosureIndicator
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "showPlan", sender: cities[indexPath.row])
+        performSegue(withIdentifier: routesPlanSegueId, sender: cities[indexPath.row])
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
-        case "showPlan":
+        case routesPlanSegueId:
             if let planVc = segue.destination as? RoutesPlanViewController, let city = sender as? City {
                 planVc.city = city
             }
+        
         default:
             break
         }

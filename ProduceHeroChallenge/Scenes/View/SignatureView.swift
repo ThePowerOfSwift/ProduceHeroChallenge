@@ -10,47 +10,52 @@ import UIKit
 
 class SignatureView: UIView {
     
+    private lazy var path = UIBezierPath()
+    private lazy var previousTouchPoint = CGPoint.zero
+    private lazy var shapeLayer = CAShapeLayer()
+    
     var paths: [UIBezierPath] = []
 
-    override func draw(_ rect: CGRect) {
-        for path in paths {
-           path.stroke()
-            animatePath(path)
-        }
-     }
-     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        if let cgPoint = touches.first?.location(in: self) {
-            
-            let path = UIBezierPath()
-            path.lineWidth = 4.0
-            path.move(to: cgPoint)
-            paths.append(path)
-            animatePath(path)
-        }
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        setupView()
+    }
 
-     }
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupView()
+    }
 
-     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesMoved(touches, with: event)
-        if let cgPoint = touches.first?.location(in: self), let path = paths.last {
-            path.addLine(to: cgPoint)
-            animatePath(path)
-            setNeedsDisplay()
-        }
-     }
-    
-    func animatePath(_ path: UIBezierPath) {
-        
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.frame = bounds
-        shapeLayer.path = path.cgPath
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+
+    private func setupView(){
         layer.addSublayer(shapeLayer)
+        shapeLayer.lineWidth = 7
+        shapeLayer.strokeColor = UIColor.black.cgColor
+    }
+    
+    func clear() {
+        paths.removeAll()
+        shapeLayer.path = nil
+    }
 
-        let strokeEndAnimation = CABasicAnimation(keyPath: "strokeEnd")
-        strokeEndAnimation.duration = 0.0
-        strokeEndAnimation.fromValue = 0.0
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        if let location = touches.first?.location(in: self) {
+            previousTouchPoint = location
+        }
+    }
 
-        shapeLayer.add(strokeEndAnimation, forKey: "strokeEndAnimation")
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesMoved(touches, with: event)
+        if let location = touches.first?.location(in: self) {
+            path.move(to: location)
+            path.addLine(to: previousTouchPoint)
+            previousTouchPoint = location
+            shapeLayer.path = path.cgPath
+            paths.append(path)
+        }
     }
 }

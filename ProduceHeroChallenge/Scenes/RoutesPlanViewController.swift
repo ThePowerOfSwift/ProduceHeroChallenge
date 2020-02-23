@@ -58,7 +58,7 @@ extension RoutesPlanViewController: UITableViewDataSource {
 extension RoutesPlanViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "showOrder", sender: city.businesses[indexPath.row].orders)
+        performSegue(withIdentifier: orderSegueId, sender: city.businesses[indexPath.row].orders)
     }
 }
 
