@@ -12,7 +12,7 @@ class SignatureView: UIView {
     
     private lazy var path = UIBezierPath()
     private lazy var previousTouchPoint = CGPoint.zero
-    private lazy var shapeLayer = CAShapeLayer()
+    private var shapeLayer: CAShapeLayer!
     
     var paths: [UIBezierPath] = []
 
@@ -31,6 +31,7 @@ class SignatureView: UIView {
     }
 
     private func setupView(){
+        shapeLayer = CAShapeLayer()
         layer.addSublayer(shapeLayer)
         shapeLayer.lineWidth = 7
         shapeLayer.strokeColor = UIColor.black.cgColor
@@ -38,7 +39,9 @@ class SignatureView: UIView {
     
     func clear() {
         paths.removeAll()
+        path = UIBezierPath()
         shapeLayer.path = nil
+        setupView()
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
